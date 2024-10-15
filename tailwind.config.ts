@@ -55,19 +55,39 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}, 
-		animation: {
-			fade: 'fadeIn .5s ease-in-out',
-		},
-
-		keyframes: {
-			fadeIn: {
-				from: { opacity: "0" },
-				to: { opacity: "1" },
-			},
-		},
-  	}, 
-	
+  		},
+  		animation: {
+  			fade: 'fadeIn .5s ease-in-out',
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
+  		},
+  		keyframes: {
+  			fadeIn: {
+  				from: {
+  					opacity: '0'
+  				},
+  				to: {
+  					opacity: '1'
+  				}
+  			},
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		}
+  	}
   },
   plugins: [require("tailwindcss-animate")],
 };

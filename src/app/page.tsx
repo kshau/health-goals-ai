@@ -1,15 +1,9 @@
 "use client"
 
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { exampleMentalGoals, examplePhysicalGoals, WeightUnit } from "@/lib/utils"
 import { ChevronLeft, ChevronRight, Trash2Icon } from "lucide-react"
 import { Dispatch, SetStateAction, useState } from "react"
@@ -25,16 +19,36 @@ export default function Home() {
         <span className="text-primary">!</span>
       </div>
 
-      <div className="font-semibold text-xl lg:text-3xl max-w-[55rem] mt-16 text-center">
-        <span>Enter your information into the following fields, and we will provide a </span>
-        <span className="text-accent">realistic </span>
-        <span>approach to achieving your </span>
-        <span className="text-accent">health goals</span>
-        <span>!</span>
-      </div>
-
       <GoalsForm/>
 
+    </div>
+  )
+
+}
+
+function IncompleteFormHeader() {
+
+  return (
+    <div className="font-semibold text-xl lg:text-3xl max-w-[55rem] mt-16 text-center">
+      <span>Enter your information into the following fields, and we will provide a </span>
+      <span className="text-accent">realistic </span>
+      <span>approach to achieving your </span>
+      <span className="text-accent">health goals</span>
+      <span>!</span>
+    </div>
+  )
+
+}
+
+function CompleteFormHeader() {
+
+  return (
+    <div className="font-semibold text-xl lg:text-3xl max-w-[50rem] mt-16 text-center">
+      <span>Here is what you should do in order to </span>
+      <span className="text-accent">achieve </span>
+      <span>your </span>
+      <span className="text-accent">health goals</span>
+      <span>!</span>
     </div>
   )
 
@@ -80,8 +94,22 @@ function GoalsForm() {
   const [currentPageIdx, setCurrentPageIdx] = useState<number>(0);
   const [key, setKey] = useState<number>(0);
 
+  if (currentPageIdx >= pages.length) {
+
+    return (
+
+      <div className="flex flex-col items-center animate-fade">
+        <CompleteFormHeader/>
+        <GoalsFormResults/>
+      </div>
+
+    )
+
+  }
+
   return (
-    <div className="animate-fade" key={key}>
+    <div className="flex flex-col items-center animate-fade" key={key}>
+      <IncompleteFormHeader/>
       {pages[currentPageIdx]}
       <FormNavigationButtons currentPageIdx={currentPageIdx} setCurrentPageIdx={setCurrentPageIdx} setKey={setKey}/>
     </div>
@@ -230,6 +258,28 @@ function GoalsFormPage({ goalsType, inputsPlaceholder, exampleInputs, setUserGoa
       </div>
 
     </div>
+  )
+
+}
+
+function GoalsFormResults() {
+
+  return (
+    <Accordion type="multiple" className="w-[40rem] mt-24" >
+
+        <AccordionItem value="exersise-routine">
+
+          <AccordionTrigger className="text-2xl text-secondary font-semibold">
+            Exersise Routine
+          </AccordionTrigger>
+
+          <AccordionContent>
+            Yes. It adheres to the WAI-ARIA design pattern.
+          </AccordionContent>
+
+        </AccordionItem>
+
+    </Accordion>
   )
 
 }
