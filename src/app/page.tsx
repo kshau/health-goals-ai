@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { exampleMentalGoals, examplePhysicalGoals, WeightUnit } from "@/lib/utils"
+import axios from "axios"
 import { ChevronLeft, ChevronRight, Trash2Icon } from "lucide-react"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
 
 export default function Home() {
 
@@ -100,7 +101,13 @@ function GoalsForm() {
 
       <div className="flex flex-col items-center animate-fade">
         <CompleteFormHeader/>
-        <GoalsFormResults/>
+        <GoalsFormResults formData={{
+          userAge, 
+          userWeightNumber, 
+          userWeightUnit,
+          userPhysicalGoals, 
+          userMentalGoals
+        }}/>
       </div>
 
     )
@@ -262,7 +269,28 @@ function GoalsFormPage({ goalsType, inputsPlaceholder, exampleInputs, setUserGoa
 
 }
 
-function GoalsFormResults() {
+function GoalsFormResults({ formData } : { formData : object }) {
+
+  const hasFetchedData = useRef(false);
+
+  const getGoalsResults = async () => {
+
+    await axios.post("/api/getGoalsResults", {
+      userAge: 15, 
+      userWeightNumber: 148, 
+      userWeightUnit: "lbs", 
+      userPhysicalGoals: ["gaining forearm strength", "building stamina while running"], 
+      userMentalGoals: ["falling asleep easier", "increasing focus while reading literature"]
+    })
+    
+  }
+
+  useEffect(() => {
+    if (!hasFetchedData.current) {
+      getGoalsResults();
+      hasFetchedData.current = true; 
+    }
+  }, [])
 
   return (
     <Accordion type="multiple" className="w-[40rem] mt-24" >
