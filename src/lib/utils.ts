@@ -10,6 +10,12 @@ export enum WeightUnit {
   kg = "kg"
 }
 
+export enum Gender {
+  male = "Male", 
+  female = "Female", 
+  other = "Other"
+}
+
 export const examplePhysicalGoals = ["exercising daily", "drinking more water", "eating healthier", "improving posture", 
   "building muscle", "losing weight", "running faster", "increasing flexibility", "lifting heavier", "getting stronger", 
   "walking more", "sleeping better", "better endurance", "reducing sugar", "stretching daily", "quitting smoking", "improving balance", 

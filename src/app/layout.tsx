@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,11 +26,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+
+        <footer className="text-center m-4">
+
+          <span>Powered by </span>
+
+          <Link href="https://huggingface.co/Paree/health_llama" className="underline">
+            Paree/health_llama
+          </Link>
+
+        </footer>
+
       </body>
+
     </html>
   );
 }

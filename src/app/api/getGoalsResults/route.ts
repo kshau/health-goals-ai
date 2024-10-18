@@ -5,38 +5,50 @@ export async function POST(request : NextRequest) {
 
     try {
 
-        const {
-            userAge, 
-            userWeightNumber, 
-            userWeightUnit,
-            userPhysicalGoals, 
-            userMentalGoals
-        } = await request.json();
+        const {userAge, userWeightNumber, userWeightUnit, userGender, userPhysicalGoals, userMentalGoals} = await request.json();
 
-        const exerciseRoutineRes = await ollama.chat({
+        const ollamaRes = await ollama.chat({
             model: 'Luciferalive/health_llama:latest',
-            messages: [{ 
-                role: 'user', 
-                content: 
+            messages: [
+              {
+                role: 'user',
+                content: `
+                  Use lists, paragraphs, and newlines as necessary. Use character • for bullet points.
+          
+                  I am ${userAge} years old and weigh ${userWeightNumber} ${userWeightUnit}. My gender is ${userGender}.
+          
+                  My physical health goals are:
+                  ${userPhysicalGoals}
+
+                  My mental health goals are:
+                  ${userMentalGoals}
+          
+                  Respond to each question separately. Clearly label each section as "EXERCISE ROUTINE:", "DIET:", and "HABITS:".
+          
+                  Tell me a good daily exercise routine for myself so I can achieve my goals.
                 `
-                Use less than 275 words in your response.
+              },
+              {
+                role: "user",
+                content: "Tell me a good diet for myself so I can achieve my goals."
+              },
+              {
+                role: "user",
+                content: "Tell me good daily habits I should follow so I can achieve my goals."
+              }
+            ]
+        });
 
-                I am 15 years old and weigh 148 lbs.
+        const ollamaResContent = ollamaRes.message.content;
 
-                My physical health goals are:
-                gaining forearm strength
-                building stamina while running
-
-                Create a daily exercise routine for me. Use lists and paragraphs as necessary.`, 
-
-            }],
-            
-        })
-
-        console.log(exerciseRoutineRes.message.content)
+        const exerciseRoutine = ollamaResContent.split('EXERCISE ROUTINE:')[1]?.split('DIET:')[0]?.trim();
+        const diet = ollamaResContent.split('DIET:')[1]?.split('HABITS:')[0]?.trim();
+        const habits = ollamaResContent.split('HABITS:')[1]?.trim();
 
         return NextResponse.json({ 
-            exerciseRoutine: exerciseRoutineRes.message.content
+            exerciseRoutine, 
+            diet, 
+            habits
         }, { status: 200 });
 
     }
