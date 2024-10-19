@@ -16,6 +16,12 @@ export enum Gender {
   other = "Other"
 }
 
+export enum Lifestyle {
+  sedentary = "Sedentary", 
+  active = "Active", 
+  highlyActive = "Highly active"
+}
+
 export const examplePhysicalGoals = ["exercising daily", "drinking more water", "eating healthier", "improving posture", 
   "building muscle", "losing weight", "running faster", "increasing flexibility", "lifting heavier", "getting stronger", 
   "walking more", "sleeping better", "better endurance", "reducing sugar", "stretching daily", "quitting smoking", "improving balance", 

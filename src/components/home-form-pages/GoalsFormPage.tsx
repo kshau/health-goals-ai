@@ -63,7 +63,14 @@ export function GoalsFormPage({ goalsType, inputsPlaceholder, exampleInputs, set
           <div className="flex flex-wrap w-[30rem] justify-center gap-2 mt-8">
   
             {exampleInputs.map((goal, index) => (userGoals.includes(goal) || index > 10) ? <></> : (
-              <Button variant="outline" size="sm" className="text-sm" key={index} onClick={() => {addGoal(goal)}}>
+              <Button variant="outline" size="sm" className="text-sm" key={index} onClick={() => {
+                if (userGoals.length > 0 && !userGoals[userGoals.length - 1]) {
+                  editGoal(userGoals.length - 1, goal);
+                }
+                else {
+                  addGoal(goal)
+                }
+                }}>
                 {goal}
               </Button>
             ))}

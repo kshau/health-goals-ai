@@ -5,7 +5,7 @@ export async function POST(request : NextRequest) {
 
     try {
 
-        const {userAge, userWeightNumber, userWeightUnit, userGender, userPhysicalGoals, userMentalGoals} = await request.json();
+        const {userAge, userWeightNumber, userWeightUnit, userGender, userLifestyle, userPhysicalGoals, userMentalGoals} = await request.json();
 
         const ollamaRes = await ollama.chat({
             model: 'Luciferalive/health_llama:latest',
@@ -15,7 +15,7 @@ export async function POST(request : NextRequest) {
                 content: `
                   Use lists, paragraphs, and newlines as necessary. Use character • for bullet points.
           
-                  I am ${userAge} years old and weigh ${userWeightNumber} ${userWeightUnit}. My gender is ${userGender}.
+                  I am ${userAge} years old and weigh ${userWeightNumber} ${userWeightUnit}. My gender is ${userGender}. I live a ${userLifestyle} style of life.
           
                   My physical health goals are:
                   ${userPhysicalGoals}

@@ -4,7 +4,7 @@ import { AgeAndWeightFormPage } from "@/components/home-form-pages/AgeAndWeightF
 import { GoalsFormPage } from "@/components/home-form-pages/GoalsFormPage"
 import { GoalsFormResultsPage } from "@/components/home-form-pages/GoalsFormResultsPage"
 import { Button } from "@/components/ui/button"
-import { exampleMentalGoals, examplePhysicalGoals, Gender, WeightUnit } from "@/lib/utils"
+import { exampleMentalGoals, examplePhysicalGoals, Gender, Lifestyle, WeightUnit } from "@/lib/utils"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 
@@ -71,6 +71,7 @@ function GoalsForm() {
   const [userWeightNumber, setUserWeightNumber] = useState<number | undefined>(undefined);
   const [userWeightUnit, setUserWeightUnit] = useState<WeightUnit>(WeightUnit.lbs);
   const [userGender, setUserGender] = useState<Gender>(Gender.male);
+  const [userLifestyle, setUserLifestyle] = useState<Lifestyle>(Lifestyle.sedentary);
   const [userPhysicalGoals, setUserPhysicalGoals] = useState<Array<string>>([""]);
   const [userMentalGoals, setUserMentalGoals] = useState<Array<string>>([""]);
 
@@ -81,10 +82,12 @@ function GoalsForm() {
       setUserWeightNumber={setUserWeightNumber} 
       setUserWeightUnit={setUserWeightUnit} 
       setUserGender={setUserGender}
+      setUserLifestyle={setUserLifestyle}
       userAge={userAge}
       userWeightNumber={userWeightNumber}
       userWeightUnit={userWeightUnit}
       userGender={userGender}
+      userLifestyle={userLifestyle}
     />, 
 
     <GoalsFormPage
@@ -119,6 +122,7 @@ function GoalsForm() {
           userWeightNumber, 
           userWeightUnit,
           userGender,
+          userLifestyle,
           userPhysicalGoals, 
           userMentalGoals
         }}/>

@@ -28,13 +28,14 @@ export function GoalsFormResultsPage({ formData } : { formData : Record<any, any
   
     const getGoalsResults = async () => {
   
-      const {userAge, userWeightNumber, userWeightUnit, userGender, userPhysicalGoals, userMentalGoals} = formData;
+      const {userAge, userWeightNumber, userWeightUnit, userGender, userLifestyle, userPhysicalGoals, userMentalGoals} = formData;
   
       const res = await axios.post("/api/getGoalsResults", {
         userAge,
         userWeightNumber,
         userWeightUnit,
         userGender,
+        userLifestyle,
         userPhysicalGoals, 
         userMentalGoals,
       })
@@ -58,7 +59,7 @@ export function GoalsFormResultsPage({ formData } : { formData : Record<any, any
   
     return (
         <div className="flex flex-col items-center">
-            <Accordion type="multiple" className="w-[40rem] mt-24 animate-fade" >
+            <Accordion type="multiple" className="w-[40rem] mt-24 animate-fade" defaultValue={[...(accordionData.map(item => item.value)), "yourInput"]}>
         
                 {accordionData.map(item => (
                 <AccordionItem value={item.value}>
@@ -84,6 +85,7 @@ export function GoalsFormResultsPage({ formData } : { formData : Record<any, any
                     <span>Age: {formData.userAge}</span>
                     <span>Gender: {formData.userGender}</span>
                     <span>Weight: {formData.userWeightNumber} {formData.userWeightUnit}</span>
+                    <span>Lifestyle: {formData.userLifestyle}</span>
                     <span>Physical Goals: {formData.userPhysicalGoals.filter((goal : string) => goal).toString()}</span>
                     <span>Mental Goals: {formData.userMentalGoals.filter((goal : string) => goal).toString()}</span>
                 </AccordionContent>

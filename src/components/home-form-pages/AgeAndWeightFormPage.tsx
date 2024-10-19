@@ -1,18 +1,20 @@
 "use client";
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Gender, WeightUnit } from "@/lib/utils";
+import { Gender, Lifestyle, WeightUnit } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 
-export function AgeAndWeightFormPage({ setUserAge, setUserWeightNumber, setUserWeightUnit, setUserGender, userAge, userWeightNumber, userWeightUnit, userGender } : { 
+export function AgeAndWeightFormPage({ setUserAge, setUserWeightNumber, setUserWeightUnit, setUserGender, setUserLifestyle, userAge, userWeightNumber, userWeightUnit, userGender, userLifestyle } : { 
     setUserAge : Dispatch<SetStateAction<any>>, 
     setUserWeightNumber : Dispatch<SetStateAction<any>>, 
     setUserWeightUnit :  Dispatch<SetStateAction<any>>, 
     setUserGender: Dispatch<SetStateAction<any>>,
+    setUserLifestyle: Dispatch<SetStateAction<any>>,
     userAge : number | undefined, 
     userWeightNumber : number | undefined,
     userWeightUnit : WeightUnit, 
     userGender : Gender
+    userLifestyle: Lifestyle
   }) {
   
     return (
@@ -56,6 +58,24 @@ export function AgeAndWeightFormPage({ setUserAge, setUserWeightNumber, setUserW
             </Select>
           </div>
         </div>
+
+        <div className="font-semibold flex flex-col items-center mt-24 gap-y-6">
+          <span className="text-secondary text-2xl">Describe your current lifestyle.</span>
+          <Select onValueChange={(value : Lifestyle) => setUserLifestyle(value)}>
+              <SelectTrigger className="w-40">
+                <SelectValue placeholder={userLifestyle}/>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value={Lifestyle.sedentary}>Sedentary</SelectItem>
+                  <SelectItem value={Lifestyle.active}>Active</SelectItem>
+                  <SelectItem value={Lifestyle.highlyActive}>Highly active</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+        </div>
+
+        
       </div>
     )
   
